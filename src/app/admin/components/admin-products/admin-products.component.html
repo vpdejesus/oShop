@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-xs-6 col-md-8">
+    <p>
+      <a routerLink="/admin/products/new" class="btn btn-primary"
+        >New Product</a
+      >
+    </p>
+  </div>
+  <div class="col-xs-6 col-md-2 mt-3">
+    <input
+      matinput
+      type="text"
+      (keyup)="doFilter($event.target.value)"
+      placeholder="Search"
+    />
+  </div>
+</div>
+
+<div class="container mat-elevation-z8">
+  <table class="mat-cell" #table mat-table [dataSource]="productList" matSort>
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell fxFlex="15%" *matHeaderCellDef mat-sort-header>
+        Title
+      </th>
+      <td mat-cell fxFlex="15%" *matCellDef="let element">
+        {{ element.title }}
+      </td>
+    </ng-container>
+
+    <!-- Price Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell fxFlex="15%" *matHeaderCellDef mat-sort-header>
+        Price
+      </th>
+      <td mat-cell fxFlex="15%" *matCellDef="let element">
+        {{ element.price | currency }}
+      </td>
+    </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell fxFlex="15%" *matHeaderCellDef>
+        Action
+      </th>
+      <td mat-cell fxFlex="15%" *matCellDef="let element">
+        <div class="row row-grid">
+          <div class="col-sm-2">
+            <button mat-mini-fab color="primary" (click)="edit(element.key)">
+              <mat-icon class="mat-18">edit</mat-icon>
+            </button>
+          </div>
+          <div class="col-sm-2">
+            <button mat-mini-fab color="warn" (click)="delete(element)">
+              <mat-icon class="mat-18">delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <div
+    class="no-results"
+    [style.display]="productList?.data.length == 0 ? '' : 'none'"
+  >
+    No records to show...
+  </div>
+
+  <mat-paginator
+    #paginator
+    [length]="productList?.data.length"
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>

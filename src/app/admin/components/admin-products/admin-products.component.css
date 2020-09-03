@@ -1,0 +1,13 @@
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* Mat table */
+.no-results {
+  display: flex;
+  justify-content: center;
+  padding: 14px;
+  font-size: 14px;
+  font-style: italic;
+}
